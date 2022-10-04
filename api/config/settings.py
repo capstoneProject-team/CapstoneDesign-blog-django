@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'debug_toolbar',
     'rest_framework',
     'api',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -128,5 +130,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS = ['127.0.0.1']
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000'
+                         ,'http://localhost:3000']
+CORS_ALLOW_CREDENTIALS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
