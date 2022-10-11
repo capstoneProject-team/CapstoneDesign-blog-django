@@ -6,7 +6,7 @@ from .models import User
 from django.views import View
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from decouple import config
+# from decouple import config
 
 from rest_framework import status
 from rest_framework.response import Response
