@@ -69,14 +69,23 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS' : ('rest_framework.pagination.PageNumberPagination', 'rest_framework.permissions.IsAuthenticated',),
     'PAGE_SIZE' : 10,
-    'DEFALUT_PERMISSION_CLASSES' : (
+    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
 
 }
+JWT_AUTH ={
+    'JWT_SECRET_KEY' : SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH' : True,
+    'JWT_EXPIRATION_DELTA' : datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
 
+}
 
 ROOT_URLCONF = 'config.urls'
 
@@ -133,6 +142,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL="accounts.User"
 
 
 # Internationalization
