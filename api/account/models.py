@@ -7,7 +7,11 @@ from django.shortcuts import resolve_url
 class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    location = models.CharField(max_length=3)
     website_url = models.URLField(blank=True)
+    hint1 = models.TextField(blank=True)
+    hint2 = models.TextField(blank=True)
+    nickname = models.CharField(max_length=20)
     avatar = models.ImageField(
         blank=True,
         upload_to="accounts/avatar/%Y/%m/%d",
