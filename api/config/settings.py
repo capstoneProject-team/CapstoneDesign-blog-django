@@ -13,30 +13,28 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import datetime
-import os, environ
+import environ
+# import my_settings
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
 
-# reading .env file
-environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+env = environ.Env(DEBUG=(bool, True))
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
+# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: keep the secret key used in production secret!
+# .env에 있음
+SECRET_KEY = env('JWT_SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-# .env에 있음
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 
@@ -69,16 +67,25 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS' : ('rest_framework.pagination.PageNumberPagination', 'rest_framework.permissions.IsAuthenticated',),
     'PAGE_SIZE' : 10,
-    'DEFALUT_PERMISSION_CLASSES' : (
+    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFALUT_PERMISSION_CLASSES' : (
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
-}
 
+}
+JWT_AUTH ={
+    'JWT_SECRET_KEY' : SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH' : True,
+    'JWT_EXPIRATION_DELTA' : datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
+
+}
 
 ROOT_URLCONF = 'config.urls'
 
@@ -103,15 +110,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hed',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
-SECRET_KEY = env('JWT_SECRET_KEY')
+#DATABASES = my_settings.DATABASES
+#SECRET_KEY = my_settings.SECRET_KEY
+#print(SECRET_KEY)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -130,6 +142,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL="account.User"
 
 
 # Internationalization
