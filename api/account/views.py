@@ -1,61 +1,54 @@
-import json
-import bcrypt
-
-from .models import User
-
-from django.views import View
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-# from decouple import config
-
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth import get_user_model
+from rest_framework.generics import CreateAPIView, UpdateAPIView , DestroyAPIView
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from .models import User
+from .serializers import UserSerializer
 
-# Create your views here.
+
+#Create your views here.
+
 # 회원가입
-class SignUp(View):
-    @api_view(['POST'])
-    @permission_classes([AllowAny])
-    def signUp(self, request):
-        data = json.loads(request.body)
-
-        try:
-            if User.objects.filter(email = data['email']).exists():
-                return JsonResponse({"message" : "EXISTS_EMAIL"}, status=400)
-
-            User.objects.create(
-                email = data['email'],
-                password = bcrypt.hashpw(data["password"].encode("UTF-8"), bcrypt.gensalt()).decode("UTF-8")
-            ).save()
-                
-            return HttpResponse(status=200)
-            
-        except KeyError:
-            return JsonResponse({"message" : "INVALID_KEYS"}, status=400)
+class SignupView(CreateAPIView):
+    model = get_user_model()
+    serializer_class = UserSerializer
+    permission_classes = [
+        AllowAny
+    ]
 
 
-# # 로그인
-# def logIn(self, request):
-#     data = json.loads(request.body)
+# 회원정보 수정
+class UpdateInfoView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'pk'
 
-#     try:
-#         if Account.objects.filter(email=data["email"]).exists():
-#             user = Account.objects.get(email=data["email"])
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
 
-#             if bcrypt.checkpw(data['password'].encode('UTF-8'), user.password.encode('UTF-8')):
-#                 payload_value = user.id
-#                 payload = {
-#                     "subject" : payload_value,
-#                 }
-#                 token = generate_token(payload, "access")
-#                 return JsonResponse({"token": token}, status=200)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User Info updated successfully"})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
 
-#             return HttpResponse(status=401)
 
-#         return HttpResponse(status=400)
-        
-#     except KeyError:
-#         return JsonResponse({'message' : "INVALID_KEYS"}, status=400)
+# 비밀번호 변경
+class UpdatePwdView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'pk'
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "password updated successfully"})
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+
+
 
