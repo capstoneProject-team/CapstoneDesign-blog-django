@@ -23,6 +23,15 @@ class UpdateInfoView(UpdateAPIView):
     serializer_class = UserSerializer
     lookup_field = 'pk'
 
+    # def update(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance, data=request.data, partial=True)
+    #
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response({"message": "User Info updated successfully"})
+    #     else:
+    #         return Response({"message": "failed", "details": serializer.errors})
 
 
 class DeleteView(DestroyAPIView):
