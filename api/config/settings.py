@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'post',
-    'account'
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -69,14 +69,23 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS' : ('rest_framework.pagination.PageNumberPagination', 'rest_framework.permissions.IsAuthenticated',),
     'PAGE_SIZE' : 10,
-    'DEFALUT_PERMISSION_CLASSES' : (
+    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
 
 }
+JWT_AUTH ={
+    'JWT_SECRET_KEY' : SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH' : True,
+    'JWT_EXPIRATION_DELTA' : datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
 
+}
 
 ROOT_URLCONF = 'config.urls'
 
@@ -134,6 +143,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL="account.User"
+# username 말고 email을 디폴트로 설정할 수 있는 방법?
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
