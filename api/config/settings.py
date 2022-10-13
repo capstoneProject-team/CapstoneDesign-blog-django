@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'post',
-    'account'
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -144,7 +144,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL="account.User"
-
+# username 말고 email을 디폴트로 설정할 수 있는 방법?
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
