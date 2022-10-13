@@ -22,21 +22,8 @@ class UpdateInfoView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'pk'
-    permission_classes = [
-        AllowAny
-    ]
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "User Info updated successfully"})
-        else:
-            return Response({"message": "failed", "details": serializer.errors})
 
 
-# 비밀번호 변경
 
 class DeleteView(DestroyAPIView):
     permission_classes = [

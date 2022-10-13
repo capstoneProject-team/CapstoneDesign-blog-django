@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        instance.username = validated_data.get('username', instance.username)
+        # instance.username = validated_data.get('username', instance.username)
         instance.set_password(validated_data.get('password', instance.password))
         instance.nickname = validated_data.get('nickname', instance.nickname)
         instance.location = validated_data.get('location', instance.location)
