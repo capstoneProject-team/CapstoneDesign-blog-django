@@ -35,9 +35,6 @@ class UpdateInfoView(UpdateAPIView):
 
 
 class DeleteView(DestroyAPIView):
-    permission_classes = [
-        AllowAny
-    ]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
