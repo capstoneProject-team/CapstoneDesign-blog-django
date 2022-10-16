@@ -39,7 +39,7 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 # Application definition
-
+#'rest_framework_simplejwt', 추가
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
