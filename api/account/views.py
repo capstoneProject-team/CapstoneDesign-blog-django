@@ -4,6 +4,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from .models import User
 from .serializers import UserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import  MyTokenObtainPairSerializer
 
 
 #Create your views here.
@@ -39,4 +41,5 @@ class DeleteView(DestroyAPIView):
     serializer_class = UserSerializer
 
 
-
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
