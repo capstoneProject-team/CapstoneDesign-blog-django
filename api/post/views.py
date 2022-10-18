@@ -20,8 +20,8 @@ class PostListView(generics.ListAPIView):
     #     queryset = self.model.objects.filter(poster_id=poster_id)
     #     return queryset.order_by('-post_time')
 
+class CreatePostView(CreateAPIView):
 
-class CreatePostView(CreateAPIView) :
     model = Post
     serializer_class = PostSerializer
 
