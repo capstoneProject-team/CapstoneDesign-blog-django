@@ -54,8 +54,8 @@ class PostListView(generics.ListCreateAPIView) :
         return queryset
 
 
+class CreatePostView(CreateAPIView):
 
-class CreatePostView(CreateAPIView) :
     model = Post
     serializer_class = PostSerializer
 
