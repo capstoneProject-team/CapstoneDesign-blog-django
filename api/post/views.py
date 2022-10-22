@@ -1,7 +1,6 @@
-from django.shortcuts import render
-from rest_framework.decorators import authentication_classes
 from rest_framework.generics import CreateAPIView, UpdateAPIView ,DestroyAPIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 from rest_framework import viewsets, generics
 from .models import Post
 from .serializers import PostSerializer
@@ -10,15 +9,44 @@ from .serializers import PostSerializer
 
 # Create your views here.
 
-class PostListView(generics.ListAPIView):
-    queryset = Post.objects.all().order_by('-created_at')
+class PostListView(generics.ListCreateAPIView) :
     serializer_class = PostSerializer
-    model = Post
-    # paginate_by = 5
-    # def get_queryset(self):
-    #     post_id = self.kwargs['poster_id']
-    #     queryset = self.model.objects.filter(poster_id=poster_id)
-    #     return queryset.order_by('-post_time')
+
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        queryset = Post.objects.all()
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.set_filters(self.get_queryset(), request)
+
+        self.paginator.page_size_query_param = "page_size"
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def set_filters(self, queryset, request):
+        title = request.query_params.get('title', None)
+        content = request.query_params.get('content', None)
+        created_at = request.query_params.get('created_at', None)
+
+        if title is not None:
+            queryset = queryset.filter(title__contains=title)
+
+        if content is not None:
+            queryset = queryset.filter(content__contains=content)
+
+        if created_at is not None:
+            queryset = queryset.filter(created_at__contains=created_at)
+
+        return queryset
+
 
 class CreatePostView(CreateAPIView):
 
