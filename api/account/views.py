@@ -1,6 +1,9 @@
+import convertapi as convertapi
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import CreateAPIView, UpdateAPIView ,DestroyAPIView,RetrieveAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,10 +11,10 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import  MyTokenObtainPairSerializer
+from .serializers import MyTokenObtainPairSerializer
 
 
-#Create your views here.
+# Create your views here.
 
 # 회원가입
 class SignupView(CreateAPIView):
@@ -27,6 +30,9 @@ class UpdateInfoView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'pk'
+    permission_classes = [
+        AllowAny
+    ]
 
     # def update(self, request, *args, **kwargs):
     #     instance = self.get_object()
@@ -38,22 +44,31 @@ class UpdateInfoView(UpdateAPIView):
     #     else:
     #         return Response({"message": "failed", "details": serializer.errors})
 
-#회원 삭제
+
+# 회원 삭제
 class DeleteView(DestroyAPIView):
+    permission_classes = [
+        AllowAny
+    ]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def FindPasswordView(request):
-    print(request.POST)
-    print(request.data['username'])
-    qs=User.objects.filter(username=request.data['username'],hint1=request.data['hint1'],hint2=request.data['hint2'])
-    serializer=UserSerializer(qs,many=True)
-    return Response(serializer.data)
+    try:
+        qs = User.objects.filter(username=request.data['user']['username'],
+                                 hint1=request.data['user']['hint1'], hint2=request.data['user']['hint2'])
+        serializer = UserSerializer(qs, many=True)
+        if(serializer.data[0]==None):
+            raise Exception("정보 불일치")
+        return Response(serializer.data)
+    except Exception as e:
+        return HttpResponse('Unauthorized', status=401)
 
-#JWT 토큰 Customizing
+
+# JWT 토큰 Customizing
 class MyTokenObtainPairView(TokenObtainPairView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
-
-
