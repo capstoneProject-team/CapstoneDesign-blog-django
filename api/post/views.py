@@ -11,11 +11,11 @@ from .serializers import PostSerializer
 
 class PostListView(generics.ListCreateAPIView) :
     serializer_class = PostSerializer
-
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
-        queryset = Post.objects.all()
+        author_id = self.request.GET.get('author_id')
+        queryset = Post.objects.filter(author_id=author_id)
         return queryset
 
     def list(self, request, *args, **kwargs):
