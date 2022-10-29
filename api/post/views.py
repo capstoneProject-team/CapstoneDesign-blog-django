@@ -4,8 +4,12 @@ from rest_framework.response import Response
 from rest_framework import viewsets, generics
 from .models import Post
 from .serializers import PostSerializer
-
-
+import torch
+from torch import nn
+import torch.nn.functional as F
+import torch.optim as optim
+from kobert.utils import get_tokenizer
+from kobert.pytorch_kobert import get_pytorch_kobert_model
 
 # Create your views here.
 
@@ -49,7 +53,6 @@ class PostListView(generics.ListCreateAPIView) :
 
 
 class CreatePostView(CreateAPIView):
-
     model = Post
     serializer_class = PostSerializer
 
@@ -57,12 +60,22 @@ class CreatePostView(CreateAPIView):
         serializer.save(author=self.request.user)
 
 
+
 class UpdatePostView(UpdateAPIView) :
-    queryset = Post.objects.all()
+
+    def get_queryset(self):
+        author_id = self.request.GET.get('author_id')
+        queryset = Post.objects.filter(author_id=author_id)
+        return queryset
+
     serializer_class = PostSerializer
     lookup_field = 'pk'
 
 
 class DeletePostView(DestroyAPIView):
-    queryset = Post.objects.all()
+    def get_queryset(self):
+        author_id = self.request.GET.get('author_id')
+        queryset = Post.objects.filter(author_id=author_id)
+        return queryset
+
     serializer_class = PostSerializer

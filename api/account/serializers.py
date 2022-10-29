@@ -18,12 +18,13 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        # instance.username = validated_data.get('username', instance.username)
-        instance.set_password(validated_data.get('password', instance.password))
-        instance.nickname = validated_data.get('nickname', instance.nickname)
-        instance.location = validated_data.get('location', instance.location)
-        instance.save()
-        return instance
+        saveInstance = instance
+        saveInstance.username = validated_data.get('username', instance.username)
+        saveInstance.set_password(validated_data.get('password', instance.password))
+        saveInstance.nickname = validated_data.get('nickname', instance.nickname)
+        saveInstance.location = validated_data.get('location', instance.location)
+        saveInstance.save()
+        return saveInstance
 
 
 

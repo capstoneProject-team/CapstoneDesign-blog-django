@@ -7,7 +7,7 @@ from django.shortcuts import resolve_url
 class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    location = models.CharField(max_length=3)
+    location = models.CharField(max_length=5)
     website_url = models.URLField(blank=True)
     hint1 = models.TextField(blank=True)
     hint2 = models.TextField(blank=True)
