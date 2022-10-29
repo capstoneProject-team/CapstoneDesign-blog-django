@@ -11,4 +11,5 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
     path('token/verify/', TokenVerifyView.as_view()),
+    path('findPassword/', views.FindPasswordView),
 ]
