@@ -20,6 +20,8 @@ class Post(models.Model):
     sad = models.IntegerField(null=True)
     keyword = models.TextField(null=True)
 
+    #auto_now 는 자동으로 디비에 저장된다.
+    #register to admin
 
     # Java 의 toString 과 같은 기능
     def __str__(self):
@@ -28,8 +30,3 @@ class Post(models.Model):
     class Meta: #inner class 로 기본정렬을 지정. 쿼리를 날릴때 마다 order_by 를 자동으로 날린다.
         ordering=['-created_at']
 
-    # def get_absolute_url(self):
-    #     return reverse('instagram:post_detail', args=[self.pk])
-    # def message_length(self):
-    #     return len(self.message)
-    # message_length.short_description ="메세지 글자수"

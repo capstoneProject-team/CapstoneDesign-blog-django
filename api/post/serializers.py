@@ -15,13 +15,13 @@ class PostSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField("get_author_nickname")
     keyword = serializers.SerializerMethodField("get_emotions_keyword")
 
+
     def get_author_nickname(self, obj):
         return obj.author.nickname
 
     def get_emotions_keyword(self, obj):
         content = obj.content
         return predict(content)
-
 
 
 

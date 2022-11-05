@@ -11,14 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-<<<<<<< HEAD
 import os
 import datetime
 import environ
 # import my_settings
-
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -39,37 +35,15 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 
+
 # Application definition
 #'rest_framework_simplejwt', 추가
-=======
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p#mhka8jaxssypy90alkf0tj#vcc4aahm28+q$vwuk2ai-eh_+'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
-
->>>>>>> 1c29f671595c980727e7801ab4959813515ae162
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-<<<<<<< HEAD
     'django_extensions',
     'corsheaders',
     'rest_framework_simplejwt',
@@ -82,13 +56,18 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-=======
     'api',
+    'corsheaders',
+    'rest_framework_simplejwt',
+    'debug_toolbar',
     'rest_framework',
+    'post',
+    'account',
+    # 'post.apps.PostConfig',
 ]
 
 MIDDLEWARE = [
->>>>>>> 1c29f671595c980727e7801ab4959813515ae162
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,7 +75,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-<<<<<<< HEAD
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
@@ -148,10 +126,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': datetime.timedelta(days=1),
 }
 
-=======
-]
 
->>>>>>> 1c29f671595c980727e7801ab4959813515ae162
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -175,7 +150,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-<<<<<<< HEAD
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -190,16 +164,7 @@ DATABASES = {
 #DATABASES = my_settings.DATABASES
 #SECRET_KEY = my_settings.SECRET_KEY
 #print(SECRET_KEY)
-=======
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
->>>>>>> 1c29f671595c980727e7801ab4959813515ae162
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -219,12 +184,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-<<<<<<< HEAD
+
 AUTH_USER_MODEL="account.User"
 # username 말고 email을 디폴트로 설정할 수 있는 방법?
-=======
->>>>>>> 1c29f671595c980727e7801ab4959813515ae162
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -241,7 +203,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-<<<<<<< HEAD
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
@@ -256,10 +218,4 @@ CORS_ALLOW_CREDENTIALS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-=======
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
->>>>>>> 1c29f671595c980727e7801ab4959813515ae162

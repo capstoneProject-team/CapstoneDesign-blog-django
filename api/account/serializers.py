@@ -1,3 +1,4 @@
+
 from django.contrib.sites import requests
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -14,8 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
                                    nickname=validated_data['nickname'],
                                    location=validated_data['location'],
                                    hint1=validated_data['hint1'],
-                                   hint2=validated_data['hint2']
-                                   )  # 여기에 hint1,2 추가 요망
+                                   hint2=validated_data['hint2'])  
         user.set_password(validated_data['password'])
         user.save()
         return user
@@ -28,8 +28,8 @@ class UserSerializer(serializers.ModelSerializer):
             instance.nickname = validated_data.get('nickname', instance.nickname)
             instance.save()
 
-            data = {'username': validated_data.get('nickname'),
-                    'password': validated_data.get('password')}
+            data = {'username': instance.nickname,
+                    'password': instance.password}
 
             token = requests.post('http://localhost:8000/token/', data=data)
             return token

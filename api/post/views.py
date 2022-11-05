@@ -1,5 +1,7 @@
 from rest_framework.generics import CreateAPIView, UpdateAPIView ,DestroyAPIView
+
 from django.views.generic.detail import DetailView
+
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import viewsets, generics
