@@ -21,16 +21,18 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        if(validated_data.get('password')!=None):
+        if( validated_data.get('password')!= None ):
             instance.set_password(validated_data.get('password'))
             instance.save()
         else:
             instance.nickname = validated_data.get('nickname', instance.nickname)
             instance.save()
-            #db에서 password 받아온 코드 추가 필요.
-            data = {'username':'~','password':'db에서 받아온 password'}
-            res = requests.post('http://localhost:8000/token/',data=data)
-            return res
+
+            data = {'username': validated_data.get('nickname'),
+                    'password': validated_data.get('password')}
+
+            token = requests.post('http://localhost:8000/token/', data=data)
+            return token
 
 
 
