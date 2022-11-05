@@ -1,4 +1,7 @@
 from rest_framework.generics import CreateAPIView, UpdateAPIView ,DestroyAPIView
+
+from django.views.generic.detail import DetailView
+
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import viewsets, generics
@@ -49,6 +52,15 @@ class PostListView(generics.ListCreateAPIView) :
         if created_at is not None:
             queryset = queryset.filter(created_at__contains=created_at)
 
+        return queryset
+
+
+class PostDetailView(DetailView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        post_id = self.request.GET.get('post_id')
+        queryset = Post.objects.filter(post_id=post_id)
         return queryset
 
 

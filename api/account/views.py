@@ -14,7 +14,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import MyTokenObtainPairSerializer
 
 
-# Create your views here.
 
 # 회원가입
 class SignupView(CreateAPIView):
@@ -30,28 +29,17 @@ class UpdateInfoView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'pk'
-    permission_classes = [
-        AllowAny
-    ]
 
-    # def update(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     serializer = self.get_serializer(instance, data=request.data, partial=True)
-    #
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response({"message": "User Info updated successfully"})
-    #     else:
-    #         return Response({"message": "failed", "details": serializer.errors})
 
 
 # 회원 삭제
 class DeleteView(DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
     permission_classes = [
         AllowAny
     ]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+
 
 
 @api_view(['POST'])

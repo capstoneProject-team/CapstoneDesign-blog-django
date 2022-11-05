@@ -1,3 +1,5 @@
+
+from django.contrib.sites import requests
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -13,26 +15,30 @@ class UserSerializer(serializers.ModelSerializer):
                                    nickname=validated_data['nickname'],
                                    location=validated_data['location'],
                                    hint1=validated_data['hint1'],
-                                   hint2=validated_data['hint2'],
-                                   )  # 여기에 hint1,2 추가 요망
+                                   hint2=validated_data['hint2'])  
         user.set_password(validated_data['password'])
         user.save()
         return user
 
     def update(self, instance, validated_data):
-        saveInstance = instance
-        saveInstance.username = validated_data.get('username', instance.username)
-        saveInstance.set_password(validated_data.get('password', instance.password))
-        saveInstance.nickname = validated_data.get('nickname', instance.nickname)
-        saveInstance.location = validated_data.get('location', instance.location)
-        saveInstance.save()
-        return saveInstance
+        if( validated_data.get('password')!= None ):
+            instance.set_password(validated_data.get('password'))
+            instance.save()
+        else:
+            instance.nickname = validated_data.get('nickname', instance.nickname)
+            instance.save()
+
+            data = {'username': instance.nickname,
+                    'password': instance.password}
+
+            token = requests.post('http://localhost:8000/token/', data=data)
+            return token
 
 
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "nickname", "location","hint1","hint2"]
+        fields = ["id", "username", "password", "nickname", "location", "hint1", "hint2"]
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

@@ -15,9 +15,6 @@ import os
 import datetime
 import environ
 # import my_settings
-
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -38,6 +35,7 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 
+
 # Application definition
 #'rest_framework_simplejwt', 추가
 INSTALLED_APPS = [
@@ -46,7 +44,19 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django_extensions',
+    'corsheaders',
+    'rest_framework_simplejwt',
+    'debug_toolbar',
+    'rest_framework',
+    'post',
+    'account',
+    # 'post.apps.PostConfig',
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'api',
     'corsheaders',
     'rest_framework_simplejwt',
     'debug_toolbar',
@@ -116,6 +126,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': datetime.timedelta(days=1),
 }
 
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -154,6 +165,7 @@ DATABASES = {
 #SECRET_KEY = my_settings.SECRET_KEY
 #print(SECRET_KEY)
 
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -172,9 +184,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 AUTH_USER_MODEL="account.User"
 # username 말고 email을 디폴트로 설정할 수 있는 방법?
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -191,6 +203,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
@@ -204,4 +217,5 @@ CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000'
 CORS_ALLOW_CREDENTIALS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
