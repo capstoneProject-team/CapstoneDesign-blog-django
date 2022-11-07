@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from . models import Post
-from .analyzer import predict
+# from .analyzer import predict
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -21,7 +21,14 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_emotions_keyword(self, obj):
         content = obj.content
-        return predict(content)
+        # return predict(content)
+        return content
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title')
+        instance.content = validated_data.get('content')
+        instance.save()
+        return instance
 
 
 

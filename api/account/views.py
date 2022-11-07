@@ -36,9 +36,6 @@ class UpdateInfoView(UpdateAPIView):
 class DeleteView(DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [
-        AllowAny
-    ]
 
 
 
@@ -58,5 +55,5 @@ def FindPasswordView(request):
 
 # JWT 토큰 Customizing
 class MyTokenObtainPairView(TokenObtainPairView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny, )
     serializer_class = MyTokenObtainPairSerializer

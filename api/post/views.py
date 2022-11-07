@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView ,DestroyAPIView
 from django.views.generic.detail import DetailView
 
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import viewsets, generics
 from .models import Post
@@ -74,14 +75,10 @@ class CreatePostView(CreateAPIView):
 
 
 class UpdatePostView(UpdateAPIView) :
-
-    def get_queryset(self):
-        author_id = self.request.GET.get('author_id')
-        queryset = Post.objects.filter(author_id=author_id)
-        return queryset
-
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
     lookup_field = 'pk'
+
 
 
 class DeletePostView(DestroyAPIView):
