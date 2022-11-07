@@ -1,5 +1,5 @@
 
-from django.contrib.sites import requests
+import requests
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -15,36 +15,33 @@ class UserSerializer(serializers.ModelSerializer):
                                    nickname=validated_data['nickname'],
                                    location=validated_data['location'],
                                    hint1=validated_data['hint1'],
-                                   hint2=validated_data['hint2'])  
+                                   hint2=validated_data['hint2'],
+                                   question1=validated_data['question1'],
+                                   question2=validated_data['question2'],
+                                   question3=validated_data['question3'])
         user.set_password(validated_data['password'])
         user.save()
         return user
 
     def update(self, instance, validated_data):
-        if( validated_data.get('password')!= None ):
+        if(validated_data.get('nickname')==None):
             instance.set_password(validated_data.get('password'))
             instance.save()
         else:
             instance.nickname = validated_data.get('nickname', instance.nickname)
             instance.save()
 
-            data = {'username': instance.nickname,
-                    'password': instance.password}
-
-            token = requests.post('http://localhost:8000/token/', data=data)
-            return token
-
-
+        return instance
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "nickname", "location", "hint1", "hint2"]
+        fields = ["id", "username", "password", "nickname", "location", "hint1", "hint2", "question1", "question2", "question3"]
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
         token['nickname']=str(user.nickname)
         token['location']=str(user.location)
         token['email']=user.username

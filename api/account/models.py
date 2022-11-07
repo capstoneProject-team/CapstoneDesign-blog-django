@@ -17,6 +17,11 @@ class User(AbstractUser):
         upload_to="accounts/avatar/%Y/%m/%d",
         help_text="48px * 48px 크기의 png/jpg 파일을 업로드해주세요.",
     )
+    question1 = models.TextField(blank=True)
+    question2 = models.TextField(blank=True)
+    question3 = models.TextField(blank=True)
+    token = models.TextField(blank=True)
+
 
     @property
     def name(self):
