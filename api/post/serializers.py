@@ -36,16 +36,11 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = [
-            "id",
-            "author",
-            "title",
-            "photo",
-            "content",
-            "created_at",
-            "updated_at",
+            "id", "author", "title", "photo", "content", "created_at", "updated_at",
+            "happy", "angry", "hurt", "startled", "anxious", "sad", "keyword"
         ]
 
-    author_email = serializers.SerializerMethodField("get_author_nickname")
+    author = serializers.SerializerMethodField("get_author_nickname")
 
     def get_author_nickname(self, obj):
         return obj.author.nickname
