@@ -38,10 +38,19 @@ class PostListView(generics.ListCreateAPIView) :
 
 
     def set_filters(self, queryset, request):
-        search = request.query_params.get('search', None)
+        title = request.query_params.get('title', None)
+        content = request.query_params.get('content', None)
+        create_at = request.query_params.get('create_at', None)
 
-        if search is not None:
-            queryset = queryset.filter(search__contains=search)
+        if title is not None:
+            queryset = queryset.filter(title__contains=title)
+
+        if content is not None:
+            queryset = queryset.filter(content__contains=content)
+
+        if create_at is not None:
+            queryset = queryset.filter(create_at__contains=create_at)
+
 
 
         return queryset
