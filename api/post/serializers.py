@@ -12,6 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
             "happy", "angry", "hurt", "startled", "anxious", "sad", "keyword"
         ]
 
+
     author = serializers.SerializerMethodField("get_author_nickname")
     keyword = serializers.SerializerMethodField("get_emotions_keyword")
 
@@ -24,9 +25,12 @@ class PostSerializer(serializers.ModelSerializer):
         # return predict(content)
         return content
 
+
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title')
         instance.content = validated_data.get('content')
+        instance.create_at = validated_data.get('created_at')
+        instance.photo = validated_data.get('photo')
         instance.save()
         return instance
 

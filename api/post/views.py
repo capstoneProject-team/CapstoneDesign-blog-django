@@ -8,14 +8,11 @@ from rest_framework.response import Response
 from rest_framework import viewsets, generics, mixins
 from .models import Post
 from .serializers import PostSerializer, PostDetailSerializer
-import torch
-from torch import nn
-import torch.nn.functional as F
-import torch.optim as optim
-from kobert.utils import get_tokenizer
-from kobert.pytorch_kobert import get_pytorch_kobert_model
+
 
 # Create your views here.
+
+
 
 class PostListView(generics.ListCreateAPIView) :
     serializer_class = PostSerializer
@@ -23,7 +20,6 @@ class PostListView(generics.ListCreateAPIView) :
 
     def get_queryset(self):
         author_id = self.request.GET.get('author_id')
-        print(author_id)
         queryset = Post.objects.filter(author_id=author_id)
         return queryset
 
@@ -40,10 +36,11 @@ class PostListView(generics.ListCreateAPIView) :
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+
     def set_filters(self, queryset, request):
         title = request.query_params.get('title', None)
         content = request.query_params.get('content', None)
-        created_at = request.query_params.get('created_at', None)
+        create_at = request.query_params.get('create_at', None)
 
         if title is not None:
             queryset = queryset.filter(title__contains=title)
@@ -51,24 +48,13 @@ class PostListView(generics.ListCreateAPIView) :
         if content is not None:
             queryset = queryset.filter(content__contains=content)
 
-        if created_at is not None:
-            queryset = queryset.filter(created_at__contains=created_at)
+        if create_at is not None:
+            queryset = queryset.filter(create_at__contains=create_at)
+
+
 
         return queryset
 
-
-# class PostDetailView(DetailView):
-#     # serializer_class = PostDetailSerializer
-#     # def get_queryset(self):
-#     #     post_id = self.request.GET.get('post_id')
-#     #     print(post_id)
-#     #     queryset = Post.objects.filter(post_id=post_id)
-#     #     return queryset
-#     queryset = Post.objects.all()
-#
-#     def get_queryset(self):
-#         """Filter pages by a book"""
-#         return self.queryset.filter(post_id=self.kwargs.get('post_id'))
 
 class PostDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin):
     serializer_class = PostDetailSerializer
