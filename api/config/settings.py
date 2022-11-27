@@ -8,7 +8,7 @@ import environ
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env(
@@ -184,7 +184,7 @@ INTERNAL_IPS = ['127.0.0.1']
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000'
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://3.36.254.187'
     , 'http://localhost:3000']
 CORS_ALLOW_CREDENTIALS = True
 
