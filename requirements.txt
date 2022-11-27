@@ -121,12 +121,12 @@ sqlparse==0.4.3
 sympy==1.10.1
 terminado==0.17.0
 tinycss2==1.2.1
-tokenizers==0.8.1rc2
+tokenizers==0.10.3
 torch==1.10.1
 tornado==6.2
 tqdm==4.64.1
 traitlets==5.5.0
-transformers==3.1.0
+transformers==4.8.1
 typing_extensions==4.4.0
 urllib3==1.25.11
 wcwidth==0.2.5

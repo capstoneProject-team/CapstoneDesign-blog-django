@@ -1,0 +1,20 @@
+FROM python:3.7.15
+
+MAINTAINER Eunji Park <eunji303@naver.com>
+
+WORKDIR /capstone_deploy/backend/
+
+RUN pip3 install django
+
+
+COPY requirements.txt /capstone_deploy/backend/
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+# manage.py를 실행할 수 있는 디렉토리로 이동합니다.
+
+# CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
+EXPOSE 8000
+

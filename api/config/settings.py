@@ -23,7 +23,7 @@ SECRET_KEY = env('JWT_SECRET_KEY')
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 # 'rest_framework_simplejwt', 추가
@@ -57,7 +57,9 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': (
-    'rest_framework.pagination.PageNumberPagination', 'rest_framework.permissions.IsAuthenticated',),
+    'rest_framework.pagination.PageNumberPagination',
+    'rest_framework.permissions.IsAuthenticated',
+    ),
     'PAGE_SIZE': 7,
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -125,7 +127,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.backends.mysql',
         'NAME': 'hed',
         'USER': 'root',
         'PASSWORD': '1234',
