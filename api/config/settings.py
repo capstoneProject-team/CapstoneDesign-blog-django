@@ -31,7 +31,7 @@ def get_secret(setting, secrets=secrets):
 
 SECRET_KEY = get_secret('JWT_SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
