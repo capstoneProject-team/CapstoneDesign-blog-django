@@ -7,7 +7,7 @@ import environ
 import json
 from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 secret_file = os.path.join(BASE_DIR, "secrets.json")
 
@@ -31,7 +31,7 @@ def get_secret(setting, secrets=secrets):
 
 SECRET_KEY = get_secret('JWT_SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
