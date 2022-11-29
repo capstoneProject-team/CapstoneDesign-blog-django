@@ -195,7 +195,7 @@ INTERNAL_IPS = ['127.0.0.1']
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://3.36.254.187'
-    , 'http://localhost:3000']
+    , 'http://localhost:3000', 'http://www.harudiary.kr']
 CORS_ALLOW_CREDENTIALS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
