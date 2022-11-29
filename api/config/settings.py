@@ -185,7 +185,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS = ['3.36.254.187']
 
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://3.36.254.187:3000'
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://3.36.254.187'
     , 'http://localhost:3000', 'http://www.harudiary.kr:3000']
 CORS_ALLOW_CREDENTIALS = True
 
