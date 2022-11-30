@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from . models import Post
@@ -27,12 +29,13 @@ class PostSerializer(serializers.ModelSerializer):
 
 
     def update(self, instance, validated_data):
-        instance.title = validated_data.get('title')
-        instance.content = validated_data.get('content')
-        instance.create_at = validated_data.get('created_at')
-        instance.photo = validated_data.get('photo')
-        instance.save()
-        return instance
+        result = instance
+        result.title = validated_data.get('title', instance.title)
+        result.content = validated_data.get('content', instance.content)
+        result.photo = validated_data.get('photo')
+        result.created_at = validated_data.get('created_at', instance.created_at)
+        result.save()
+        return result
 
 
 
