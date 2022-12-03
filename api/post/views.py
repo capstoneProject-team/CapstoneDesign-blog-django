@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets, generics, mixins
 from .models import Post
 from .serializers import PostSerializer, PostDetailSerializer
-
+from .analyzer import predict
 
 # Create your views here.
 
@@ -79,7 +79,17 @@ class CreatePostView(CreateAPIView):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        content = self.request.data.get("content", None)
+        emotion_list = predict(content)
+        serializer.save(
+            author=self.request.user,
+            happy=emotion_list[0],
+            startled=emotion_list[1],
+            angry=emotion_list[2],
+            anxious=emotion_list[3],
+            hurt=emotion_list[4],
+            sad=emotion_list[5]
+        )
 
 
 
