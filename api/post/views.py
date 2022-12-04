@@ -80,6 +80,7 @@ class CreatePostView(CreateAPIView):
 
     def perform_create(self, serializer):
         content = self.request.data.get("content", None)
+        keyword = self.request.data.get("keyword", None)
         emotion_list = predict(content)
         serializer.save(
             author=self.request.user,
@@ -101,9 +102,6 @@ class UpdatePostView(UpdateAPIView) :
 
 
 class DeletePostView(DestroyAPIView):
-    def get_queryset(self):
-        author_id = self.request.GET.get('author_id')
-        queryset = Post.objects.filter(author_id=author_id)
-        return queryset
-
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
+    lookup_field = 'pk'
