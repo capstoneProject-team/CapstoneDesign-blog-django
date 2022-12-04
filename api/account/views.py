@@ -25,6 +25,7 @@ class SignupView(CreateAPIView):
 
 
 # 회원정보 수정
+@permission_classes([AllowAny])
 class UpdateInfoView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -33,9 +34,11 @@ class UpdateInfoView(UpdateAPIView):
 
 
 # 회원 삭제
+# @permission_classes([AllowAny])
 class DeleteView(DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_field = 'pk'
 
 
 
