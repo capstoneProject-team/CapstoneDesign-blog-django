@@ -34,6 +34,7 @@ class PostSerializer(serializers.ModelSerializer):
         result.content = validated_data.get('content', instance.content)
         result.photo = validated_data.get('photo')
         result.created_at = validated_data.get('created_at', instance.created_at)
+        result.keyword = validated_data.get('keyword', instance.keyword)
         result.save()
         return result
 
