@@ -75,7 +75,7 @@ tokenizer = get_tokenizer()
 tok = nlp.data.BERTSPTokenizer(tokenizer, vocab, lower=False)
 
 model1 = BERTClassifier(bertmodel, dr_rate=0.5)
-model1.load_state_dict(torch.load("/capstone_deploy/backend/api/post/model-4.pt", map_location = 'cpu'))
+model1.load_state_dict(torch.load("/capstone_deploy/backend/api/post/model-5.pt", map_location = 'cpu'))
 model1.to(device)
 
 ## Setting parameters
