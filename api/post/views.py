@@ -40,7 +40,7 @@ class PostListView(generics.ListCreateAPIView) :
     def set_filters(self, queryset, request):
         title = request.query_params.get('title', None)
         content = request.query_params.get('content', None)
-        create_at = request.query_params.get('create_at', None)
+        created_at = request.query_params.get('created_at', None)
 
         if title is not None:
             queryset = queryset.filter(title__contains=title)
@@ -48,10 +48,8 @@ class PostListView(generics.ListCreateAPIView) :
         if content is not None:
             queryset = queryset.filter(content__contains=content)
 
-        if create_at is not None:
-            queryset = queryset.filter(create_at__contains=create_at)
-
-
+        if created_at is not None:
+            queryset = queryset.filter(created_at__contains=created_at)
 
         return queryset
 
@@ -59,14 +57,6 @@ class PostListView(generics.ListCreateAPIView) :
 class PostDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin):
     serializer_class = PostDetailSerializer
 
-    # list랑 동일하게 qerutyset 작용
-    # 여기는 list가 아닌 lsit 중에서 하나의 상품정보를 갖고 오는 api인데
-    # 왜 all()을 사용하는가?
-    # mixin을 상속받고 get을 사용하면
-    # url에서 pk 값을 연결해줘어야 한다
-    # pk값을 연결해주지 않으면 오류 난다
-    # pk값이 들어오기 때문에 queryset안에서 해당 pk를 가진 상품만 주기 때문에
-    # 모든 queryset을 갖고와서 그 중에서 get함수에서 알아서 걸러준다
     def get_queryset(self):
         return Post.objects.all().order_by('id')
 
