@@ -19,3 +19,5 @@
   | Test    | 테스트 코드 수정 |    
   | Add     | 새로운 라이브러리 / 파일 생성 |  
 
+## 프로젝트 구조
+![](https://user-images.githubusercontent.com/65437087/207233603-ebb6068b-0f6c-4d0c-a0cb-d4a63523df40.JPG)
